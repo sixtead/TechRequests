@@ -9,8 +9,16 @@
 
     <changeSet id="1.0" author="sixtead">
 
+        <createSequence sequenceName="seq_groups_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_statuses_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_priorities_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_tags_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_users_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_issues_id" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="seq_comments_id" incrementBy="1" startValue="1"/>
+
         <createTable tableName="groups">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_groups_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -25,7 +33,7 @@
         </createTable>
 
         <createTable tableName="statuses">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_statuses_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -40,7 +48,7 @@
         </createTable>
 
         <createTable tableName="priorities">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_priorities_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -55,7 +63,7 @@
         </createTable>
 
         <createTable tableName="tags">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_tags_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -70,7 +78,7 @@
         </createTable>
 
         <createTable tableName="users">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_users_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="varchar(255)">
@@ -93,7 +101,7 @@
         </createTable>
 
         <createTable tableName="issues">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_issues_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -123,7 +131,7 @@
         </createTable>
 
         <createTable tableName="comments">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_comments_id">
                 <constraints primaryKey="true"/>
             </column>
             <column name="content" type="varchar(255)"/>
