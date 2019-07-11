@@ -3,10 +3,13 @@ package org.sixtead.techrequests.user;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.sixtead.techrequests.comments.Comment;
 import org.sixtead.techrequests.group.Group;
+import org.sixtead.techrequests.issue.Issue;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,6 +25,12 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Issue> createdIssues;
+    @OneToMany(mappedBy = "assignedTo")
+    private Set<Issue> assignedIssues;
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
     @CreationTimestamp
     private Timestamp createdAt;
     @UpdateTimestamp

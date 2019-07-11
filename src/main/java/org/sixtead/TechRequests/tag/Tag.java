@@ -3,18 +3,28 @@ package org.sixtead.techrequests.tag;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.sixtead.techrequests.issue.Issue;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "tags")
 public class Tag {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tags_id")
     private Long id;
     private String name;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "tags_issues",
+            joinColumns = { @JoinColumn(name = "tag_id") },
+            inverseJoinColumns = { @JoinColumn(name = "issue_id") }
+    )
+    private Set<Issue> issues;
     @CreationTimestamp
     private Timestamp createdAt;
     @UpdateTimestamp
