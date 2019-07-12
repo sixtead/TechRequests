@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1.1" author="sixtead">
+
+        <addDefaultValue tableName="groups" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="groups" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="statuses" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="statuses" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="priorities" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="priorities" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="tags" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="tags" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="users" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="groups" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="users" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="groups" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="issues" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="issues" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+        <addDefaultValue tableName="comments" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        <addDefaultValue tableName="comments" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
+
+    </changeSet>
+
+</databaseChangeLog>
