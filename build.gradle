@@ -9,11 +9,11 @@ group = 'org.sixtead'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-//configurations {
-//	compileOnly {
-//		extendsFrom annotationProcessor
-//	}
-//}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -23,11 +23,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	runtimeOnly 'com.h2database:h2'
 	implementation 'org.liquibase:liquibase-core'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
 	compileOnly 'org.slf4j:slf4j-api'
+
 	implementation 'org.webjars:bootstrap:4.3.1'
-	runtimeOnly 'com.h2database:h2'
+	implementation 'org.webjars:jquery:3.3.1-2'
+	implementation 'org.webjars:popper.js:1.14.7'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
