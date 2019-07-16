@@ -6,17 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
     @Autowired
-    private GroupRepository groupRepository;
+    private GroupService groupService;
 
     @GetMapping
     public String index(Model model) {
-        List<Group> groups = groupRepository.findAll();
+        Iterable<Group> groups = groupService.getAll();
 
         model.addAttribute("fragment", "groups");
         model.addAttribute("title", "groups");

@@ -9,11 +9,11 @@ group = 'org.sixtead'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+//configurations {
+//	compileOnly {
+//		extendsFrom annotationProcessor
+//	}
+//}
 
 repositories {
 	mavenCentral()
@@ -29,6 +29,9 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	compileOnly 'org.slf4j:slf4j-api'
 
