@@ -1,15 +1,13 @@
 package org.sixtead.techrequests.group;
 
-import java.sql.Timestamp;
-import java.util.Set;
-
-import javax.persistence.*;
-
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import lombok.Data;
 import org.sixtead.techrequests.user.User;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,13 +15,18 @@ import org.sixtead.techrequests.user.User;
 public class Group {
 
     @Id
+    @SequenceGenerator(name = "seq_groups_id", sequenceName = "seq_groups_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_groups_id")
     private Long id;
+
     private String name;
+
     @OneToMany(mappedBy = "group")
     private Set<User> user;
+
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 
