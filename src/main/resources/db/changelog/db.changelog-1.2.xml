@@ -7,7 +7,7 @@
             http://www.liquibase.org/xml/ns/dbchangelog-ext
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1.2" author="sixtead">
+    <changeSet id="1.2" author="sixtead" context="prod">
 
         <insert tableName="groups">
             <column name="name">users</column>

@@ -7,7 +7,7 @@
             http://www.liquibase.org/xml/ns/dbchangelog-ext
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1.0" author="sixtead">
+    <changeSet id="1.0" author="sixtead" context="prod, dev">
 
         <createSequence sequenceName="seq_groups_id" incrementBy="1" startValue="1"/>
         <createSequence sequenceName="seq_statuses_id" incrementBy="1" startValue="1"/>

@@ -7,7 +7,7 @@
             http://www.liquibase.org/xml/ns/dbchangelog-ext
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1.1" author="sixtead">
+    <changeSet id="1.1" author="sixtead" context="prod, dev">
 
         <addDefaultValue tableName="groups" columnName="created_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
         <addDefaultValue tableName="groups" columnName="updated_at" defaultValueComputed="CURRENT_TIMESTAMP"/>
