@@ -1,4 +1,4 @@
-package org.sixtead.TechRequests;
+package org.sixtead.techrequests;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
