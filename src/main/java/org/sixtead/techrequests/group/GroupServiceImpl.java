@@ -9,13 +9,8 @@ public class GroupServiceImpl implements GroupService {
     private GroupRepository groupRepository;
 
     @Override
-    public Group getById(Long id) {
+    public Group getById(Long id) throws NullPointerException {
         return groupRepository.findById(id).orElseThrow(NullPointerException::new);
-    }
-
-    @Override
-    public Group getByName(String name) {
-        return groupRepository.findFirstByName(name).orElseThrow(NullPointerException::new);
     }
 
     @Override
@@ -24,7 +19,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group save(Group group) {
+    public Group create(Group group) {
         return groupRepository.save(group);
     }
 }
