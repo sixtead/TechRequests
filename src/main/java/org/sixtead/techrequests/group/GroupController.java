@@ -38,7 +38,7 @@ public class GroupController {
 
         groupService.create(group);
         model.addAttribute("groups", groupService.getAll());
-        return "group-index";
+        return "redirect:/groups";
     }
 
     @GetMapping("/edit/{id}")
@@ -58,7 +58,7 @@ public class GroupController {
 
         groupService.create(group);
         model.addAttribute("groups", groupService.getAll());
-        return "group-index";
+        return "redirect:/groups";
     }
 
     @GetMapping("/delete/{id}")
@@ -67,6 +67,6 @@ public class GroupController {
 
         groupService.delete(group);
         model.addAttribute("groups", groupService.getAll());
-        return "group-index";
+        return "redirect:/groups";
     }
 }
