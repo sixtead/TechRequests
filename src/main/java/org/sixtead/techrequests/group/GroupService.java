@@ -4,4 +4,5 @@ public interface GroupService {
     public Group getById(Long id);
     public Iterable<Group> getAll();
     public Group create(Group group);
+    public void delete(Group group);
 }

@@ -22,4 +22,9 @@ public class GroupServiceImpl implements GroupService {
     public Group create(Group group) {
         return groupRepository.save(group);
     }
+
+    @Override
+    public void delete(Group group) {
+        groupRepository.delete(group);
+    }
 }

@@ -24,6 +24,7 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private Set<User> user;
 
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 
