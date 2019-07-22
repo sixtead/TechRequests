@@ -22,18 +22,18 @@ public class GroupController {
         Iterable<Group> groups = groupService.getAll();
 
         model.addAttribute("groups", groups);
-        return "group-index";
+        return "group/index";
     }
 
     @GetMapping("/add")
     public String showAddForm(Group group) {
-        return "group-add";
+        return "group/add";
     }
 
     @PostMapping("/add")
     public String addGroup(@Valid Group group, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "group-add";
+            return "group/add";
         }
 
         groupService.create(group);
@@ -46,14 +46,14 @@ public class GroupController {
         Group group = groupService.getById(id);
 
         model.addAttribute("group", group);
-        return "group-edit";
+        return "group/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String editGroup(@PathVariable("id") Long id, @Valid Group group, BindingResult result, Model model) {
         if (result.hasErrors()) {
             group.setId(id);
-            return "group-edit";
+            return "group/edit";
         }
 
         groupService.create(group);

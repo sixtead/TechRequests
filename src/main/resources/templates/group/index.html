@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
     <body>
-        <div th:fragment="groups" class="row">
+        <div layout:fragment="content" class="row">
             <div class="col">
                 <table class="table table-striped">
                     <thead class="thead-dark">
