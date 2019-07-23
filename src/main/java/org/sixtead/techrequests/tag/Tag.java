@@ -15,9 +15,12 @@ import java.util.Set;
 public class Tag {
 
     @Id
+    @SequenceGenerator(name = "seq_tags_id", sequenceName = "seq_tags_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tags_id")
     private Long id;
+
     private String name;
+
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "tags_issues",
@@ -25,8 +28,11 @@ public class Tag {
             inverseJoinColumns = { @JoinColumn(name = "issue_id") }
     )
     private Set<Issue> issues;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 

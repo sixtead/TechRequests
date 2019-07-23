@@ -17,13 +17,19 @@ import java.util.Set;
 public class Status {
 
     @Id
+    @SequenceGenerator(name = "seq_statuses_id", sequenceName = "seq_statuses_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_statuses_id")
     private Long id;
+
     private String name;
+
     @OneToMany(mappedBy = "status")
     private Set<Issue> issues;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 

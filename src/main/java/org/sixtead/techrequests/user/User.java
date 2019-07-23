@@ -15,24 +15,37 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
+    @SequenceGenerator(name = "seq_users_id", sequenceName = "seq_users_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_users_id")
     private Long id;
+
     private String username;
+
     private String passwordDigest;
+
     private String firstName;
+
     private String lastName;
+
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
+
     @OneToMany(mappedBy = "createdBy")
     private Set<Issue> createdIssues;
+
     @OneToMany(mappedBy = "assignedTo")
     private Set<Issue> assignedIssues;
+
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 

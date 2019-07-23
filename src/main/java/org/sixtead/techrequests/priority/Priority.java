@@ -16,13 +16,19 @@ import java.util.Set;
 public class Priority {
 
     @Id
+    @SequenceGenerator(name = "seq_priorities_id", sequenceName = "seq_priorities_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_priorities_id")
     private Long id;
+
     private String name;
+
     @OneToMany(mappedBy = "priority")
     private Set<Issue> issues;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
 

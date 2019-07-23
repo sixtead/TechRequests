@@ -15,17 +15,33 @@ import java.sql.Timestamp;
 public class Comment {
 
     @Id
+    @SequenceGenerator(name = "seq_comments_id", sequenceName = "seq_comments_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_comments_id")
     private Long id;
+
     private String content;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "issue_id")
     private Issue issue;
+
+    @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    public Comment() {
+    }
+
+    public Comment(String content, User user, Issue issue) {
+        this.content = content;
+        this.user = user;
+        this.issue = issue;
+    }
 }
