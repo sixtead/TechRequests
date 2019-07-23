@@ -1,9 +1,11 @@
 package org.sixtead.techrequests.group;
 
+import org.sixtead.techrequests.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,13 @@ public class GroupController {
             return "group/add";
         }
 
-        groupService.create(group);
+        try {
+            groupService.create(group);
+        } catch (ServiceException e) {
+            model.addAttribute("message", e.getMessage());
+            return "group/add";
+        }
+
         model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
@@ -56,7 +64,13 @@ public class GroupController {
             return "group/edit";
         }
 
-        groupService.create(group);
+        try {
+            groupService.update(group);
+        } catch (ServiceException e) {
+            model.addAttribute("message", e.getMessage());
+            return "group/edit";
+        }
+
         model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
