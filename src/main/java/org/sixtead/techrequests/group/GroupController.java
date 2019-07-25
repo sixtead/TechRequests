@@ -1,5 +1,6 @@
 package org.sixtead.techrequests.group;
 
+import org.sixtead.techrequests.exceptions.NotFoundException;
 import org.sixtead.techrequests.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,10 +53,13 @@ public class GroupController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Group group = groupService.getById(id);
-
-        model.addAttribute("group", group);
-        return "group/edit";
+        try {
+            Group group = groupService.getById(id);
+            model.addAttribute("group", group);
+            return "group/edit";
+        } catch (NotFoundException e) {
+            return "404";
+        }
     }
 
     @PostMapping("/edit/{id}")
