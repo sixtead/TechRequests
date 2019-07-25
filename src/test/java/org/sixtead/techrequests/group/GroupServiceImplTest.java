@@ -5,8 +5,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.sixtead.techrequests.exceptions.ServiceException;
 import org.springframework.test.context.junit4.SpringRunner;
 
