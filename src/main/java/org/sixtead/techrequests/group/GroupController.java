@@ -41,7 +41,8 @@ public class GroupController {
         try {
             groupService.create(group);
         } catch (ServiceException e) {
-            model.addAttribute("message", e.getMessage());
+//            model.addAttribute("message", e.getMessage());
+            result.rejectValue("name", "name.unique", "name is not unique");
             return "group/add";
         }
 
@@ -67,7 +68,8 @@ public class GroupController {
         try {
             groupService.update(group);
         } catch (ServiceException e) {
-            model.addAttribute("message", e.getMessage());
+//            model.addAttribute("message", e.getMessage());
+            result.rejectValue("name", "name.unique", "name is not unique");
             return "group/edit";
         }
 
