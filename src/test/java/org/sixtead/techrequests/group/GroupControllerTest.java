@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -107,11 +108,35 @@ public class GroupControllerTest {
     }
 
     @Test
-    public void should_redirect_to_404_if_group_not_found() throws Exception {
+    public void should_show_404_if_group_not_found() throws Exception {
         Mockito.when(groupService.getById(1L)).thenThrow(new NotFoundException());
 
         mvc.perform(get("/groups/edit/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("404"))
+                .andExpect(content().string(Matchers.containsString("404")));
+    }
+
+    @Test
+    public void delete_should_redirect_to_groups() throws Exception {
+        Group group = new Group("users");
+        group.setId(1L);
+
+        Mockito.when(groupService.getById(group.getId())).thenReturn(group);
+
+        mvc.perform(get("/groups/delete/{id}", group.getId()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/404"));
+                .andExpect(redirectedUrl("/groups"));
+    }
+
+    @Test
+    public void delete_non_existing_group_should_show_404() throws Exception {
+        Long id = 1L;
+
+        Mockito.when(groupService.getById(id)).thenThrow(new NotFoundException());
+
+        mvc.perform(get("/groups/delete/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(view().name("404"));
     }
 }

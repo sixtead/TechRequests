@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -42,7 +38,6 @@ public class GroupController {
         try {
             groupService.create(group);
         } catch (ServiceException e) {
-//            model.addAttribute("message", e.getMessage());
             result.rejectValue("name", "name.unique", "name is not unique");
             return "group/add";
         }
@@ -72,7 +67,6 @@ public class GroupController {
         try {
             groupService.update(group);
         } catch (ServiceException e) {
-//            model.addAttribute("message", e.getMessage());
             result.rejectValue("name", "name.unique", "name is not unique");
             return "group/edit";
         }
@@ -83,10 +77,15 @@ public class GroupController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, Model model) {
-        Group group = groupService.getById(id);
 
-        groupService.delete(group);
-        model.addAttribute("groups", groupService.getAll());
+        try {
+            Group group = groupService.getById(id);
+            groupService.delete(group);
+        } catch (NotFoundException e) {
+            return "404";
+        }
+
+//        model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
 }
