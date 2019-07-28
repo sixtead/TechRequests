@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1.4" author="sixtead" context="prod, dev">
+
+        <createSequence sequenceName="seq_roles_id" incrementBy="1" startValue="1"/>
+
+        <createTable tableName="roles">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_groups_id">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="group_roles">
+            <column name="group_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_groups_roles_group_id" references="groups(id)"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_groups_roles_role_id" references="roles(id)"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="group_id, role_id" tableName="group_roles"/>
+
+    </changeSet>
+
+</databaseChangeLog>
