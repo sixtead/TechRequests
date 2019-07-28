@@ -7,9 +7,8 @@
         <form layout:fragment="content" action="#" th:action="@{/groups/edit/{id}(id=${group.id})}" th:object="${group}" method="post">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name">
+                <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name" />
                 <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-<!--                <div class="invalid-feedback d-block" th:if="${message != null}" th:text="${message}"></div>-->
             </div>
 
             <input class="btn btn-primary" type="submit" value="Save Group">
