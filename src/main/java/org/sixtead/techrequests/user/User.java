@@ -25,6 +25,8 @@ public class User {
 
     private String passwordDigest;
 
+    private Boolean enabled;
+
     private String firstName;
 
     private String lastName;
