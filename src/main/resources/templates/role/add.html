@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<body>
+<form layout:fragment="content" action="#" th:action="@{/roles/add}" th:object="${role}" method="post">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name" />
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add Role">
+</form>
+</body>
+</html>

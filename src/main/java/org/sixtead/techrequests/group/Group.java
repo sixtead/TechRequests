@@ -3,6 +3,7 @@ package org.sixtead.techrequests.group;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.sixtead.techrequests.roles.Role;
 import org.sixtead.techrequests.user.User;
 
 import javax.persistence.*;
@@ -23,6 +24,14 @@ public class Group {
     @Column(unique = true, nullable = false)
     @NotBlank(message = "Name cannot be blank")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "group_roles",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "group")
     private Set<User> users;

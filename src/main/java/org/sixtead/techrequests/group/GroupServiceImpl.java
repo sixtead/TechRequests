@@ -7,6 +7,9 @@ import org.sixtead.techrequests.exceptions.UniqueConstraintException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @Service
 public class GroupServiceImpl implements GroupService {
 
@@ -37,7 +40,9 @@ public class GroupServiceImpl implements GroupService {
         if (group.getName() == null || group.getName().isEmpty()) {
             throw new NotNullConstraintException("name is null");
         }
-        if (groupRepository.findFirstByName(group.getName()).isPresent()) {
+
+        Optional<Group> found = groupRepository.findFirstByName(group.getName());
+        if (found.isPresent() && !Objects.equals(found.get().getId(), group.getId())) {
             throw new UniqueConstraintException("name is not unique");
         }
         return groupRepository.save(group);

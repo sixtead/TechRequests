@@ -1,25 +1,38 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
     <body>
         <nav layout:fragment="nav" class="navbar navbar-expand navbar-dark bg-dark mb-5">
-            <a class="navbar-brand" href="#">Always expand</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#">TR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2" aria-controls="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExample02">
+            <div class="collapse navbar-collapse" id="#navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">DashBoard <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="groups" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Groups
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="groups">
+                            <a class="dropdown-item" th:href="@{/groups/add}">Add</a>
+                            <a class="dropdown-item" th:href="@{/groups}">Index</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="roles" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Roles
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="roles">
+                            <a class="dropdown-item" th:href="@{/roles/add}">Add</a>
+                            <a class="dropdown-item" th:href="@{/roles}">Index</a>
+                        </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-md-0">
-                    <input class="form-control" type="text" placeholder="Search">
-                </form>
             </div>
         </nav>
     </body>

@@ -2,6 +2,7 @@ package org.sixtead.techrequests.group;
 
 import org.sixtead.techrequests.exceptions.NotFoundException;
 import org.sixtead.techrequests.exceptions.ServiceException;
+import org.sixtead.techrequests.roles.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +14,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/groups")
 public class GroupController {
+
     @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping
     public String index(Model model) {
@@ -25,12 +30,16 @@ public class GroupController {
     }
 
     @GetMapping("/add")
-    public String showAddForm(Group group) {
+    public String showAddForm(Group group, Model model) {
+        model.addAttribute("roles", roleService.getAll());
+
         return "group/add";
     }
 
     @PostMapping("/add")
     public String addGroup(@Valid Group group, BindingResult result, Model model) {
+        model.addAttribute("roles", roleService.getAll());
+
         if (result.hasErrors()) {
             return "group/add";
         }
@@ -42,15 +51,15 @@ public class GroupController {
             return "group/add";
         }
 
-        model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("group", groupService.getById(id));
+        model.addAttribute("roles", roleService.getAll());
+
         try {
-            Group group = groupService.getById(id);
-            model.addAttribute("group", group);
             return "group/edit";
         } catch (NotFoundException e) {
             return "404";
@@ -59,19 +68,19 @@ public class GroupController {
 
     @PostMapping("/edit/{id}")
     public String editGroup(@PathVariable("id") Long id, @Valid Group group, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            group.setId(id);
-            return "group/edit";
-        }
 
         try {
             groupService.update(group);
         } catch (ServiceException e) {
             result.rejectValue("name", "name.unique", "name is not unique");
+        }
+
+        if (result.hasErrors()) {
+            group.setId(id);
+            model.addAttribute("roles", roleService.getAll());
             return "group/edit";
         }
 
-        model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
 
@@ -85,7 +94,6 @@ public class GroupController {
             return "404";
         }
 
-//        model.addAttribute("groups", groupService.getAll());
         return "redirect:/groups";
     }
 }
