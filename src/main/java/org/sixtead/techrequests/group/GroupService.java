@@ -1,9 +1,9 @@
 package org.sixtead.techrequests.group;
 
 public interface GroupService {
-    public Group getById(Long id);
-    public Iterable<Group> getAll();
-    public Group create(Group group);
-    public Group update(Group group);
-    public void delete(Group group);
+    Group getById(Long id);
+    Iterable<Group> getAll();
+    Group create(Group group);
+    Group update(Group group);
+    void delete(Group group);
 }

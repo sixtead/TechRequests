@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content" class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>lastname</th>
+                    <th>firstname</th>
+                    <th>group</th>
+                    <th>createdAt</th>
+                    <th>updatedAt</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.passwordDigest}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.group}? ${user.group.name} : no"></td>
+                    <td th:text="${user.createdAt}"></td>
+                    <td th:text="${user.updatedAt}"></td>
+                    <td><a th:href="@{/users/edit/{id}(id=${user.id})}">edit</a></td>
+                    <td><a th:href="@{/users/delete/{id}(id=${user.id})}">delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

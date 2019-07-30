@@ -36,8 +36,8 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private Set<User> users;
 
-    @Column(updatable = false)
     @CreationTimestamp
+    @Column(updatable = false)
     private Timestamp createdAt;
 
     @UpdateTimestamp
