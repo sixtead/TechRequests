@@ -1,4 +1,6 @@
-package org.sixtead.techrequests.user;
+package org.sixtead.techrequests.service;
+
+import org.sixtead.techrequests.domain.User;
 
 public interface UserService {
     User getById(Long id);

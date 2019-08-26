@@ -1,10 +1,8 @@
-package org.sixtead.techrequests.group;
+package org.sixtead.techrequests.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.sixtead.techrequests.roles.Role;
-import org.sixtead.techrequests.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,6 +1,9 @@
-package org.sixtead.techrequests.roles;
+package org.sixtead.techrequests.service.implementation;
 
+import org.sixtead.techrequests.domain.Role;
 import org.sixtead.techrequests.exceptions.NotFoundException;
+import org.sixtead.techrequests.repository.RoleRepository;
+import org.sixtead.techrequests.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

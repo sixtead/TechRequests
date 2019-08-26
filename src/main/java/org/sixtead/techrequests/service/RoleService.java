@@ -1,4 +1,6 @@
-package org.sixtead.techrequests.roles;
+package org.sixtead.techrequests.service;
+
+import org.sixtead.techrequests.domain.Role;
 
 public interface RoleService {
 

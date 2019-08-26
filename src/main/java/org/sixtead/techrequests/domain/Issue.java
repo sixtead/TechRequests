@@ -1,13 +1,8 @@
-package org.sixtead.techrequests.issue;
+package org.sixtead.techrequests.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.sixtead.techrequests.comments.Comment;
-import org.sixtead.techrequests.priority.Priority;
-import org.sixtead.techrequests.status.Status;
-import org.sixtead.techrequests.tag.Tag;
-import org.sixtead.techrequests.user.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

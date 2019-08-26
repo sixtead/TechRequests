@@ -1,6 +1,8 @@
-package org.sixtead.techrequests.user;
+package org.sixtead.techrequests.controller;
 
-import org.sixtead.techrequests.group.GroupService;
+import org.sixtead.techrequests.domain.User;
+import org.sixtead.techrequests.service.GroupService;
+import org.sixtead.techrequests.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,9 +1,12 @@
-package org.sixtead.techrequests.group;
+package org.sixtead.techrequests.service.implementation;
 
+import org.sixtead.techrequests.domain.Group;
 import org.sixtead.techrequests.exceptions.NotFoundException;
 import org.sixtead.techrequests.exceptions.NotNullConstraintException;
 import org.sixtead.techrequests.exceptions.ServiceException;
 import org.sixtead.techrequests.exceptions.UniqueConstraintException;
+import org.sixtead.techrequests.repository.GroupRepository;
+import org.sixtead.techrequests.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

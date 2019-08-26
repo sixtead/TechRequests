@@ -1,4 +1,4 @@
-package org.sixtead.techrequests.roles;
+package org.sixtead.techrequests.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,5 +1,7 @@
-package org.sixtead.techrequests.roles;
+package org.sixtead.techrequests.controller;
 
+import org.sixtead.techrequests.domain.Role;
+import org.sixtead.techrequests.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

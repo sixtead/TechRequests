@@ -5,7 +5,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.sixtead.techrequests.domain.Group;
 import org.sixtead.techrequests.exceptions.ServiceException;
+import org.sixtead.techrequests.repository.GroupRepository;
+import org.sixtead.techrequests.service.GroupService;
+import org.sixtead.techrequests.service.implementation.GroupServiceImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;

@@ -1,8 +1,10 @@
-package org.sixtead.techrequests.group;
+package org.sixtead.techrequests.controller;
 
+import org.sixtead.techrequests.domain.Group;
 import org.sixtead.techrequests.exceptions.NotFoundException;
 import org.sixtead.techrequests.exceptions.ServiceException;
-import org.sixtead.techrequests.roles.RoleService;
+import org.sixtead.techrequests.service.GroupService;
+import org.sixtead.techrequests.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

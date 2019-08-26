@@ -1,6 +1,9 @@
-package org.sixtead.techrequests.user;
+package org.sixtead.techrequests.service.implementation;
 
+import org.sixtead.techrequests.domain.User;
 import org.sixtead.techrequests.exceptions.NotFoundException;
+import org.sixtead.techrequests.repository.UserRepository;
+import org.sixtead.techrequests.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

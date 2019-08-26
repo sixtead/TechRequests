@@ -1,4 +1,6 @@
-package org.sixtead.techrequests.group;
+package org.sixtead.techrequests.service;
+
+import org.sixtead.techrequests.domain.Group;
 
 public interface GroupService {
     Group getById(Long id);
