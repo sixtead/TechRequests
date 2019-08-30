@@ -6,33 +6,70 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/roles")
 public class RoleController {
 
     @Autowired
-    private RoleService roleService;
+    private RoleService service;
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("roles", roleService.getAll());
+        model.addAttribute("roles", service.getAll());
 
-        return "role/index";
+        return "roles/index";
     }
 
     @GetMapping("/add")
-    public String showAddForm(Role role) {
-        return "role/add";
+    public String add(Role role) {
+        return "roles/add";
     }
 
-    @PostMapping("/add")
-    public String addRole(Role role, BindingResult result, Model model) {
-        roleService.create(role);
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        Role role = service.getById(id);
+
+        model.addAttribute("role", role);
+
+        return "roles/edit";
+    }
+
+    @PostMapping("/create")
+    public String create(@Valid Role role, BindingResult result, Model model) {
+        if (!service.isNameUnique(role)) {
+            result.rejectValue("name", "Unique");
+        }
+
+        if (result.hasErrors()) {
+            return "roles/add";
+        }
+
+        service.save(role);
+        model.addAttribute("roles", service.getAll());
 
         return "redirect:/roles";
     }
+
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable("id") Long id, @Valid Role role, BindingResult result, Model model) {
+        if (!service.isNameUnique(role)) {
+            result.rejectValue("name", "Unique");
+        }
+
+        if (result.hasErrors()) {
+            return "roles/edit";
+        }
+
+        service.save(role);
+        model.addAttribute("roles", service.getAll());
+
+        return "redirect:/roles";
+    }
+
 }

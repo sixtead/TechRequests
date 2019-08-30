@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<body>
+<form layout:fragment="content" action="#" th:action="@{/roles/{id}/update(id=${role.id})}" th:object="${role}" method="post">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Name" th:field="*{name}" class="form-control" />
+        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Save">
+</form>
+</body>
+</html>

@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 @Data
@@ -17,6 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_roles_id")
     private Long id;
 
+    @NotBlank
     @Column(unique = true, nullable = false)
     private String name;
 

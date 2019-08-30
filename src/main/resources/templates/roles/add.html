@@ -4,13 +4,13 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout}">
 <body>
-<form layout:fragment="content" action="#" th:action="@{/roles/add}" th:object="${role}" method="post">
+<form layout:fragment="content" action="#" th:action="@{/roles/create}" th:object="${role}" method="post">
     <div class="form-group">
         <label for="name">Name</label>
-        <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name" />
+        <input type="text" id="name" placeholder="Name" th:field="*{name}" class="form-control" />
         <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
-    <input class="btn btn-primary" type="submit" value="Add Role">
+    <input class="btn btn-primary" type="submit" value="Save">
 </form>
 </body>
 </html>
