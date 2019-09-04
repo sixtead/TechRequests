@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Validated
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -22,7 +21,12 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Role save(@Valid Role role) {
+    public Role save(Role role)
+    {
+        if (role.getName() != null && !role.getName().toUpperCase().startsWith("ROLE_")) {
+            role.setName("ROLE_" + role.getName().toUpperCase());
+        }
+
         return repository.save(role);
     }
 

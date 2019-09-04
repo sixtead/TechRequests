@@ -17,7 +17,7 @@
             </thead>
             <tbody>
             <tr th:each="role : ${roles}">
-                <td><a th:href="@{/roles/{id}(id=${role.id})}" th:text="${role.name}">name</a></td>
+                <td><a th:href="@{/roles/{id}/edit(id=${role.id})}" th:text="${role.name}">name</a></td>
                 <td th:text="${role.createdAt}"></td>
                 <td th:text="${role.updatedAt}"></td>
                 <td><a th:href="@{/roles/{id}/delete(id=${role.id})}">delete</a></td>

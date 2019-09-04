@@ -40,6 +40,16 @@ public class RoleController {
         return "roles/edit";
     }
 
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id, Model model) {
+        Role role = service.getById(id);
+        service.delete(role);
+
+        model.addAttribute("roles", service.getAll());
+
+        return "roles/index";
+    }
+
     @PostMapping("/create")
     public String create(@Valid Role role, BindingResult result, Model model) {
         if (!service.isNameUnique(role)) {

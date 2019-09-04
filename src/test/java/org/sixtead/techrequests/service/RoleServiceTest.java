@@ -1,135 +1,154 @@
 package org.sixtead.techrequests.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.sixtead.techrequests.domain.Role;
 import org.sixtead.techrequests.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.sixtead.techrequests.service.implementation.RoleServiceImpl;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ConstraintViolationException;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 public class RoleServiceTest {
 
-//    @MockBean
-    @Autowired
+    @Mock
     private RoleRepository repository;
 
-    @Autowired
-    private RoleService service;
+    @InjectMocks
+    private RoleService service = new RoleServiceImpl();
+
+    private Role role;
+    private Role savedRole;
+    private List<Role> roles;
 
 
-    @Test
-    @DirtiesContext
-    public void save_withNullName_shouldThrowConstraintViolationException() {
-        assertThatThrownBy(() -> service.save(new Role(null)))
-                .isInstanceOf(ConstraintViolationException.class);
+    @Before
+    public void setUp() {
+        role = new Role("role");
+
+        savedRole = new Role();
+        savedRole.setId(1L);
+        savedRole.setName("ROLE_ROLE");
+        savedRole.setCreatedAt(Timestamp.from(Instant.now()));
+        savedRole.setUpdatedAt(Timestamp.from(Instant.now()));
+
+        roles = new ArrayList<>();
     }
 
     @Test
-    @DirtiesContext
-    public void save_withUniqueName_shouldReturnRole() {
-        Role role = new Role("role");
+    public void save_withNullName_shouldThrowTransactionSystemException() {
+        when(repository.save(role)).thenThrow(new TransactionSystemException("Could not commit JPA transaction"));
+
+        assertThatThrownBy(() -> service.save(role))
+                .isInstanceOf(TransactionSystemException.class);
+    }
+
+    @Test
+    public void save_withUniqueName_shouldReturnRoleWithPrefixedAndUppercaseName() {
+        when(repository.save(role)).thenReturn(role);
 
         assertThat(role)
                 .hasFieldOrPropertyWithValue("id", null)
-                .hasFieldOrPropertyWithValue("name", "role");
+                .hasFieldOrPropertyWithValue("name", role.getName());
+
+        role.setId(savedRole.getId());
+        role.setCreatedAt(savedRole.getCreatedAt());
+        role.setUpdatedAt(savedRole.getUpdatedAt());
 
         assertThat(service.save(role))
-                .hasNoNullFieldsOrProperties();
+                .hasNoNullFieldsOrProperties()
+                .hasFieldOrPropertyWithValue("name", savedRole.getName());
     }
 
     @Test
-    @DirtiesContext
     public void save_withNonUniqueName_shouldThrowDataIntegrityViolationException() {
-        service.save(new Role("role"));
+        when(repository.save(role)).thenThrow(new DataIntegrityViolationException(""));
 
-        assertThatThrownBy(() -> service.save(new Role("role")))
+        assertThatThrownBy(() -> service.save(role))
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
 
     @Test
-    @DirtiesContext
-    public void getById_withNullId_shouldThrowInvalidDataAccessApiUsageException() {
+    public void getById_withNullId_shouldThrowIllegalArgumentException() {
+        when(repository.findById(null)).thenThrow(new IllegalArgumentException());
+
         assertThatThrownBy(() -> service.getById(null))
-                .isInstanceOf(InvalidDataAccessApiUsageException.class)
-                .hasCauseInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DirtiesContext
     public void getById_withExistentId_shouldReturnRole() {
-        Role role = new Role("role");
-        service.save(role);
+        when(repository.findById(savedRole.getId())).thenReturn(Optional.of(savedRole));
 
-        Role foundRole = service.getById(role.getId());
-
-        assertThat(foundRole)
+        assertThat(service.getById(savedRole.getId()))
                 .isNotNull()
-                .isEqualToComparingFieldByField(role);
+                .isEqualToComparingFieldByField(savedRole);
     }
 
     @Test
-    @DirtiesContext
     public void getById_withNonExistentId_shouldThrowEntityNotFoundException() {
-        assertThatThrownBy(() -> service.getById(1L))
+        when(repository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.getById(99L))
                 .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test
-    @DirtiesContext
     public void getByName_withNullName_shouldReturnNull() {
-//        assertThatThrownBy(() -> service.getByName(null))
-//                .isInstanceOf(InvalidDataAccessApiUsageException.class)
-//                .hasCauseInstanceOf(IllegalArgumentException.class);
-        assertThat(service.getByName("non-existent"))
+        when(repository.findFirstByName(null)).thenReturn(Optional.empty());
+
+        assertThat(service.getByName(null))
                 .isNull();
     }
 
     @Test
-    @DirtiesContext
     public void getByName_withExistentName_shouldReturnRole() {
-        Role role = new Role("role");
-        service.save(role);
+        when(repository.findFirstByName(savedRole.getName())).thenReturn(Optional.of(savedRole));
 
-        Role foundRole = service.getByName(role.getName());
-
-        assertThat(foundRole)
+        assertThat(service.getByName(savedRole.getName()))
                 .isNotNull()
-                .isEqualToComparingFieldByField(role);
+                .isEqualToComparingFieldByField(savedRole);
     }
 
     @Test
-    @DirtiesContext
     public void getByName_withNonExistentName_shouldReturnNull() {
+        when(repository.findFirstByName("non-existent")).thenReturn(Optional.empty());
+
         assertThat(service.getByName("non-existent"))
                 .isNull();
     }
 
     @Test
-    @DirtiesContext
     public void getAll_withZeroRoles_shouldReturnEmptyList() {
+        when(repository.findAll()).thenReturn(roles);
+
         assertThat(service.getAll())
                 .isInstanceOf(List.class)
                 .hasSize(0);
     }
 
     @Test
-    @DirtiesContext
     public void getAll_withNonZeroRoles_shouldReturnNonEmptyList() {
-        service.save(new Role("role"));
+        roles.add(savedRole);
+
+        when(repository.findAll()).thenReturn(roles);
 
         assertThat(service.getAll())
                 .isInstanceOf(List.class)
@@ -137,17 +156,37 @@ public class RoleServiceTest {
     }
 
     @Test
-    @DirtiesContext
-    public void delete_withNullRole_shouldThrowInvalidDataAccessApiUsageException() {
+    public void delete_withNullRole_shouldThrowIllegalArgumentException() {
+        doThrow(new IllegalArgumentException()).when(repository).delete(null);
+
         assertThatThrownBy(() -> service.delete(null))
-                .isInstanceOf(InvalidDataAccessApiUsageException.class)
-                .hasCauseInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DirtiesContext
     public void delete_withExistentRole_shouldDeleteRole() {
-        Role role = service.save(new Role("role"));
+        when(repository.findAll()).thenReturn(roles);
+        doNothing().when(repository).delete(savedRole);
+
+        roles.add(savedRole);
+
+        assertThat(service.getAll())
+                .hasSize(1);
+
+        service.delete(role);
+
+        roles.remove(savedRole);
+
+        assertThat(service.getAll())
+                .hasSize(0);
+    }
+
+    @Test
+    public void delete_withNonExistentRole_shouldNotDeleteAnything() {
+        when(repository.findAll()).thenReturn(roles);
+        doNothing().when(repository).delete(role);
+
+        roles.add(savedRole);
 
         assertThat(service.getAll())
                 .hasSize(1);
@@ -155,45 +194,30 @@ public class RoleServiceTest {
         service.delete(role);
 
         assertThat(service.getAll())
-                .hasSize(0);
-    }
-
-    @Test
-    @DirtiesContext
-    public void delete_withNonExistentRole_shouldNotDeleteAnything() {
-        Role role = service.save(new Role("role"));
-
-        assertThat(service.getAll())
-                .hasSize(1);
-
-        service.delete(new Role("non-existent"));
-
-        assertThat(service.getAll())
                 .hasSize(1);
     }
 
     @Test
-    @DirtiesContext
     public void isNameUnique_withNewRoleAndUniqueName_shouldReturnTrue() {
-        assertThat(service.isNameUnique(new Role("role")))
+        when(repository.findFirstByName(role.getName())).thenReturn(Optional.empty());
+
+        assertThat(service.isNameUnique(role))
                 .isTrue();
     }
 
     @Test
-    @DirtiesContext
     public void isNameUnique_withNewRoleAndNonUniqueName_shouldReturnFalse() {
-        service.save(new Role("role"));
+        when(repository.findFirstByName(role.getName())).thenReturn(Optional.of(savedRole));
 
-        assertThat(service.isNameUnique(new Role("role")))
+        assertThat(service.isNameUnique(role))
                 .isFalse();
     }
 
     @Test
-    @DirtiesContext
     public void isNameUnique_withExistingRoleAndSameName_shouldReturnTrue() {
-        Role role = service.save(new Role("role"));
+        when(repository.findFirstByName(savedRole.getName())).thenReturn(Optional.of(savedRole));
 
-        assertThat(service.isNameUnique(role))
+        assertThat(service.isNameUnique(savedRole))
                 .isTrue();
     }
 }
